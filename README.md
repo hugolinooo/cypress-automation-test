@@ -39,7 +39,19 @@ To run the tests locally, you need to have the following software installed:
 3. Install the dependencies:
 
    ```bash
-   npm install (type here the dependencies needed, "cypress" for example)
+   npm install (type here the dependencies needed, "cypress --save-dev" for example)
+   ```
+
+4. Update the cypress.config.js:
+   ```bash
+     const { defineConfig } = require('cypress')
+
+      module.exports = defineConfig({
+       e2e: {
+         "baseUrl": "https://serverest.dev",  // URL da API
+       "fixturesFolder": "cypress/fixtures"
+       },
+      })
    ```
 
 ## Running Tests
