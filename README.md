@@ -72,7 +72,11 @@ The folder structure of this project is as follows:
 │   │   ├── LoginPage.js
 │   │   └── TransferPage.js
 │   └── support
+│   │   ├── commands.js
+│   │   └── e2e.js
 ├── README.md
+├── test_cases.feature
+├── bugs.report
 ├── cypress.json
 └── package.json
 ```
@@ -81,6 +85,8 @@ The folder structure of this project is as follows:
 - `cypress/e2e`: Contains the test file(s) written in Cypress's test script format.
 - `cypress/pageObjects`: Contains the page object files that encapsulate the interactions with different pages of the application.
 - `cypress/support`: Contains supporting files for the tests (e.g., custom commands, utilities).
+- `test_cases.feature`: Test cases for bugbank: https://bugbank.netlify.app/ in gherkin.
+- `bugs.report`: Defects and improvements registered during the tests.
 - `cypress.json`: Cypress configuration file.
 - `package.json`: NPM package configuration file.
 
