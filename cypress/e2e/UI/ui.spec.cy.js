@@ -12,26 +12,36 @@ describe('BugBank Tests', () => {
   })
 
   beforeEach(() => {
+
+    cy.restoreLocalStorage();
     // Visit BugBank HomePage
     loginPage.visit();
   })
 
+  afterEach(() => {
+    cy.saveLocalStorage();
+  });
+
+  after(() => {
+    cy.eraseData();
+  })
+
   it('Register two new accounts with balance', () => {
-    
-    cy.fixture('createdAccounts').then((accountData) => {
+    cy.fixture('createdAccounts').then((createdAccounts) => {
       loginPage.accessRegister();
       // Enter details for account 1
-      loginPage.fillRegisterForm(accountData[0].email,accountData[0].nome,accountData[0].password);
+      loginPage.fillRegisterForm(createdAccounts[0].email,createdAccounts[0].nome,createdAccounts[0].password);
       // Submit registration form for account 1
       loginPage.register();
       loginPage.updateAccount(0);
       loginPage.assertSuccessfulRegister();
       loginPage.closeModal();
-      // Access the homepage again to create another account with empty registration form
-      loginPage.visit();
+      
       loginPage.accessRegister();
+      // Erase the registration form
+      loginPage.eraseRegisterForm();
       // Enter details for account 2
-      loginPage.fillRegisterForm(accountData[1].email,accountData[1].nome,accountData[1].password);
+      loginPage.fillRegisterForm(createdAccounts[1].email,createdAccounts[1].nome,createdAccounts[1].password);
       // Submit registration form for account 1
       loginPage.register();
       loginPage.updateAccount(1);
@@ -54,19 +64,29 @@ describe('BugBank Tests', () => {
 
 
   it('Transfer money from account 1 to account 2', () => {
-    const ammount = 100;
-    const description = "Test";
-    cy.fixture('createdAccounts').then((accountData) => {
+    cy.readFile("cypress/fixtures/createdAccounts.json", (err, createdAccounts) => {
+      if (err) {
+          return console.error(err);
+      };
+    }).then((createdAccounts) => {
+
+      cy.log(createdAccounts);
+
+      const transferValue = Math.floor(Math.random() * 999);
+      const description = "Test";
+      const account = createdAccounts[1].accountNumber;
+      const dig = createdAccounts[1].digit;
+
       // Enter login credentials for account 1
-      loginPage.fillLoginForm(accountData[0].email,accountData[0].password);
+      loginPage.fillLoginForm(createdAccounts[0].email,createdAccounts[0].password);
       loginPage.login();
       loginPage.assertSuccessfulLogin();
-      balancePage.assertAccountName(accountData[0].nome);
+      balancePage.assertAccountName(createdAccounts[0].nome);
       balancePage.accessTransferPage();
       // Fill transfer form
-      transferPage.fillTransferDetails(accountData[1].accountNumber,accountData[1].digit, ammount, description);
+      transferPage.fillTransferDetails(account, dig, transferValue, description);
       // Submit transfer and update account balance
-      transferPage.submitTransfer(0, ammount);
+      transferPage.submitTransfer(0, transferValue);
       transferPage.assertSuccessfulTransfer();
       
      });
@@ -75,23 +95,27 @@ describe('BugBank Tests', () => {
   
   it('Check the balance in all accounts', () => {
     
-    cy.fixture('createdAccounts').then((accountData) => {
+    cy.readFile("cypress/fixtures/createdAccounts.json", (err, createdAccounts) => {
+      if (err) {
+          return console.error(err);
+      };
+    }).then((createdAccounts) => {
       // Enter login credentials for account 1
-      loginPage.fillLoginForm(accountData[0].email,accountData[0].password);
+      loginPage.fillLoginForm(createdAccounts[0].email,createdAccounts[0].password);
       loginPage.login();
       loginPage.assertSuccessfulLogin();
-      balancePage.assertAccountName(accountData[0].nome);
+      balancePage.assertAccountName(createdAccounts[0].nome);
       // Checks balance from account 1
-      balancePage.assertAccountBalance(accountData[0].balance)
+      balancePage.assertAccountBalance(createdAccounts[0].balance)
       balancePage.logout();
 
       // Enter login credentials for account 2
-      loginPage.fillLoginForm(accountData[1].email,accountData[1].password);
+      loginPage.fillLoginForm(createdAccounts[1].email,createdAccounts[1].password);
       loginPage.login();
       loginPage.assertSuccessfulLogin();
-      balancePage.assertAccountName(accountData[1].nome);
+      balancePage.assertAccountName(createdAccounts[1].nome);
       // Checks balance from account 2
-      balancePage.assertAccountBalance(accountData[1].balance);
+      balancePage.assertAccountBalance(createdAccounts[1].balance);
     })
   });
 

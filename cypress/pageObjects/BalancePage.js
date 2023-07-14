@@ -1,7 +1,12 @@
 class BalancePage {
       
     assertAccountBalance(expectedBalance) {    // Account Balance Validation
-      cy.get(`#textBalance`).should('contain.text', expectedBalance);
+      if(expectedBalance >= 1000){
+        expectedBalance = expectedBalance.toLocaleString('en-US', { useGrouping: true });
+        expectedBalance = expectedBalance.replace(',','.');
+      }
+
+      cy.get(`#textBalance`).should('contain.text', 'Saldo em conta R$ '+expectedBalance+',00');
     }
 
     assertAccountName(accountName) {    // Account Name Validation
@@ -9,7 +14,7 @@ class BalancePage {
       }
 
     accessTransferPage() {  // Access Transfer Page
-        cy.get('#transferButton').click();
+        cy.get('#btn-TRANSFERÊNCIA').click();
     }
 
     logout(){ // Logout

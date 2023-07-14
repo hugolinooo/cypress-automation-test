@@ -12,6 +12,21 @@
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
 
+// -- Save localStorage between tests
+let LOCAL_STORAGE_MEMORY = {};
+
+Cypress.Commands.add('saveLocalStorage', () => {
+  Object.keys(localStorage).forEach(key => {
+    LOCAL_STORAGE_MEMORY[key] = localStorage[key];
+  });
+});
+
+Cypress.Commands.add('restoreLocalStorage', () => {
+  Object.keys(LOCAL_STORAGE_MEMORY).forEach(key => {
+    localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
+  });
+});
+
 Cypress.Commands.add('generateNewData', () => {
     const random1 = Math.floor(Math.random() * 999999); 
     const random2 = Math.floor(Math.random() * 999999); 
@@ -37,15 +52,10 @@ Cypress.Commands.add('updateJsonAccount', (account) => {
                 return console.error(err);
             };
         }).then((createdAccounts) => {
-            
             const regex = /(\d+)-(\d+)/;
             const match = text.match(regex);
-            
             createdAccounts[account].accountNumber = match[1];
             createdAccounts[account].digit = match[2];
-            
-            createdAccounts[account].accountNumber = accountNumber;
-            createdAccounts[account].digit = digit;
             cy.writeFile("cypress/fixtures/createdAccounts.json", JSON.stringify(createdAccounts));  // Writing the new account data for the tests
         })
     })
@@ -69,6 +79,26 @@ Cypress.Commands.add('getBalance', (account) => {
         };
     }).then((createdAccounts) => {
         return createdAccounts[account].balance;
+    })
+});
+
+Cypress.Commands.add('eraseData', () => {
+    cy.readFile("cypress/fixtures/createdAccounts.json", (err, createdAccounts) => {
+        if (err) {
+            return console.error(err);
+        };
+    }).then((createdAccounts) => {
+        createdAccounts[0].email = null;
+        createdAccounts[0].password = null;
+        createdAccounts[0].accountNumber = null;
+        createdAccounts[0].digit = null;
+        createdAccounts[0].balance = 1000;
+        createdAccounts[1].email = null ;
+        createdAccounts[1].password = null;
+        createdAccounts[1].accountNumber = null;
+        createdAccounts[1].digit = null;
+        createdAccounts[1].balance = 1000;
+        cy.writeFile("cypress/fixtures/createdAccounts.json", JSON.stringify(createdAccounts));  // Writing the new data for the tests
     })
 });
     

@@ -29,6 +29,15 @@ class LoginPage {
         cy.get('#toggleAddBalance').click({force: true});
     }
 
+    eraseRegisterForm() { // Erase Register Form
+        
+        cy.get('input[name="email"]').eq(1).clear({force: true});
+        cy.get('input[name="name"]').clear({force: true});
+        cy.get('input[name="password"]').eq(1).clear({force: true});
+        cy.get('input[name="passwordConfirmation"]').clear({force: true});
+        cy.get('#toggleAddBalance').click({force: true});
+    }
+
     updateAccount(account){
         cy.updateJsonAccount(account);
     }

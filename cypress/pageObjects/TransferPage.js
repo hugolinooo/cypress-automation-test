@@ -14,12 +14,14 @@ class TransferPage {
             return console.error(err);
         };
       }).then((createdAccounts) => {
+        const balance0 = createdAccounts[0].balance;
+        const balance1 = createdAccounts[1].balance;
         if(originAccount==0){
-            createdAccounts[0].balance = balance - ammount;
-            createdAccounts[1].balance = balance + ammount;    
+            createdAccounts[0].balance = balance0 - ammount;
+            createdAccounts[1].balance = balance1 + ammount;    
         }else if(originAccount==1){
-            createdAccounts[1].balance = balance - ammount;
-            createdAccounts[0].balance = balance + ammount;
+            createdAccounts[1].balance = balance1 - ammount;
+            createdAccounts[0].balance = balance0 + ammount;
         }
         else{
             cy.log("Invalid account!");
