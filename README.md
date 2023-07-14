@@ -90,7 +90,7 @@ Contributions are welcome! If you find any issues or want to add new features or
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GNU General Public License v2.0](LICENSE).
 ```
 
 This README file provides an overview of the project, including instructions for getting started, running tests, and the project's folder structure. It also includes sections for contributing and the project's license.
