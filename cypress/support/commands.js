@@ -31,15 +31,21 @@ Cypress.Commands.add('generateNewData', () => {
 Cypress.Commands.add('updateJsonAccount', (account) => {
     
     cy.get('#modalText').invoke('text').then((text) => {
-        const numero = text.substring(7, 11);
-        const digito = text.substring(12, 13);
+        
         cy.readFile("cypress/fixtures/createdAccounts.json", (err, createdAccounts) => {
             if (err) {
                 return console.error(err);
             };
         }).then((createdAccounts) => {
-            createdAccounts[account].accountNumber = numero;
-            createdAccounts[account].digit = digito;
+            
+            const regex = /(\d+)-(\d+)/;
+            const match = text.match(regex);
+            
+            createdAccounts[account].accountNumber = match[1];
+            createdAccounts[account].digit = match[2];
+            
+            createdAccounts[account].accountNumber = accountNumber;
+            createdAccounts[account].digit = digit;
             cy.writeFile("cypress/fixtures/createdAccounts.json", JSON.stringify(createdAccounts));  // Writing the new account data for the tests
         })
     })
