@@ -39,7 +39,7 @@ To run the tests locally, you need to have the following software installed:
 3. Install the dependencies:
 
    ```bash
-   npm install
+   npm install (type here the dependencies needed, "cypress" for example)
    ```
 
 ## Running Tests
@@ -47,7 +47,7 @@ To run the tests locally, you need to have the following software installed:
 To run the tests, use the following command:
 
 ```bash
-npm run test
+npx cypress run
 ```
 
 This command will execute the Cypress test runner, which will launch a browser and run the automated tests against the Money Transfer application.
