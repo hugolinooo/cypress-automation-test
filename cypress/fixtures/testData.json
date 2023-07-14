@@ -1,0 +1,14 @@
+[
+{
+  "nome": "Fulano da Silva Um",
+  "email": "fulano1@qa.com.br",
+  "password": "teste1",
+  "administrador": "true"
+},
+{
+  "nome": "Beltrano da Silva Dois",
+  "email": "beltrano2@qa.com.br",
+  "password": "teste2",
+  "administrador": "false"
+}    
+]

@@ -1,0 +1,82 @@
+Bugs and Improvements:
+
+001: Wrong message when creating an existent account
+
+When creating an existent account, the application gives an success message showing that the account has been successfulky created.
+What is expected is that an error message that the account already exists.
+
+Steps to reproduce:
+
+Access the BugBank homepage
+And click on the Register button
+And fill in the registration form with an existing account
+And click on the Register button
+Then the message will show up.
+
+002: Registration form shows Field Name not mandatory
+
+When creating a new account without filling the registration form, the application does not show any error message on the field Name.
+But when trying to create a new account without name, the application shows a pop up about the field Name been mandatory.
+What is expected is that the field Name has the same behavior as the other fields.
+
+Steps to reproduce:
+
+Access the BugBank homepage
+And click on the Register button
+And leave all form empty
+And click on the Register button
+Then the message will show up.
+
+003: Registration form continues filled after register
+
+After creating a new account the registration form continues filled.
+What is expected is that the register form goes blank after the registration.
+
+Steps to reproduce:
+
+Access the BugBank login page
+And click on the Register button
+And fill in the registration form with valid credentials
+And click on the Register button
+Then close the success message
+And be click on the Register button to show the registration form filled.
+
+004: Field Name accepts numerical values and special characters
+
+When creating a new account filling the field name with numerical values or special characters, the application shows a suceess message.
+What is expected is that the application shows an error message about the field Name having invalid characters.
+
+Steps to reproduce:
+
+Access the BugBank homepage
+And click on the Register button
+And fill in the registration form with an name using numerical values or special characters
+And click on the Register button
+Then the success message will show up.
+
+005: Field Destination Account not mandatory
+
+When transfering between accounts and leaving the field destination acccount empty, the application shows a success message.
+What is expected is that the application shows an error message about the field destination account been mandatory.
+
+Steps to reproduce:
+
+After logging into BugBank
+And access the Transfer page
+And enter the transfer ammount and description
+And leave field destination account empty
+And click on the Transfer Now button
+Then the success message will show up.
+
+006: Field Transfer Ammount shows non-standard validation message
+
+When transfering between accounts and leaving the field transfer ammount empty, the application shows a non-standard validation message.
+What is expected is that the application shows an error message with the same patterns of the other fields.
+
+Steps to reproduce:
+
+After logging into BugBank
+And access the Transfer page
+And leave field transfer ammount empty
+And click on the Transfer Now button
+Then the error message will show up.
